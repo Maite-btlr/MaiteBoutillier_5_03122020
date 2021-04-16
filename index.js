@@ -17,8 +17,7 @@ function getRequest(){
                       <div class="card-body text-center">
                          <h3 class="card-title">${name}</h3>
                          <span>${price/100}€</span></p>
-                         
-                         <div class="text-center mt-4" ><a id="bouton" type="button" class="btn btn-dark text-light" onclick="window.location.href = 'produit.html?id=${_id}'">En savoir plus</a></div>
+                         <div class="text-center mt-4" ><a id="bouton" type="button" class="btn btn-dark text-light" onclick="window.location.href = 'products.html?id=${_id}'">En savoir plus</a></div>
                       </div>
                    </div>
                 </div>`
