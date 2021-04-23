@@ -38,7 +38,7 @@ function ajoutPanier() {
     if (lentilles == "") { //si aucune lentille choisie, affichage alert
       alert("Vous devez choisir un objectif");
     } else {
-        const panier = JSON.parse(localStorage.getItem("panier")) || [] // Creation d'un panier utilisateur
+        const panier = JSON.parse(localStorage.getItem("panier")) || [] // Retourne la valeur associée 
         panier.push({ //pour chaque article, on pousse les infos suivantes dans le panier
           image : article.imageUrl,
           name : article.name,
@@ -49,7 +49,7 @@ function ajoutPanier() {
           quantite : 1,
           subTotal : article.price/100*1
         })
-        window.localStorage.setItem("panier", JSON.stringify(panier))  
+        window.localStorage.setItem("panier", JSON.stringify(panier))   // Stocke les données, convertit la valeur JS en chaine Json 
         //console.log(panier)
         console.log("Le produit a été ajouté au panier");
         popUpPanier()
