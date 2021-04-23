@@ -1,0 +1,1 @@
+const panier = JSON.parse(localStorage.getItem("panier"));
