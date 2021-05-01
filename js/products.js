@@ -16,7 +16,7 @@ function ajoutContent () {
   // Ajout des options dans le HTML 
   function ajoutLenses() {
     for (let i = 0; i < article.lenses.length; i++) {
-    document.getElementById("lense_select").innerHTML += `<option value="` + article.lenses + `">`+ article.lenses + `</option>`
+    document.getElementById("lense_select").innerHTML += `<option value="` + article.lenses[i] + `">`+ article.lenses[i] + `</option>`
     }
   }
   // Présentation du produit en HTML dans la div adaptée
@@ -36,7 +36,7 @@ function ajoutContent () {
 function ajoutPanier() {
     let lentilles = document.querySelector('select').value; //Récupère la valeur de l'objectif choisi depuis la balise select 
     if (lentilles == "") { //si aucune lentille choisie, affichage alert
-      alert("Vous devez choisir un objectif");
+      alert("Oups! Vous devez choisir un objectif pour commander votre appareil");
     } else {
         const panier = JSON.parse(localStorage.getItem("panier")) || [] // Retourne la valeur associée 
         panier.push({ //pour chaque article, on pousse les infos suivantes dans le panier
@@ -59,12 +59,12 @@ function ajoutPanier() {
 //Affichage d'un popup pour confirmer l'ajout au panier  
 function popUpPanier (){ 
   if (confirm("Vous avez ajouté un article au panier") == true) {
-    userPreference = "Prêts pour de nouveaux clichés ?";
+    userChoice = "Prêts pour de nouveaux clichés ?";
   } else {
-    userPreference = "Vous n'avez rien ajouté au panier";
+    userChoice = "Vous n'avez rien ajouté au panier";
   }
 
-  document.getElementById("msg").innerHTML = userPreference; 
+  document.getElementById("msg").innerHTML = userChoice; 
 }
 
 ajoutContent();

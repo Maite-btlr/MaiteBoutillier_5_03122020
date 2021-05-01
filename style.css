@@ -1,3 +1,8 @@
 .logo-color {
     background-color: rgb(242, 233, 241);
 }
+
+#tableau_panier td {
+	vertical-align: middle;
+}
+
