@@ -25,5 +25,6 @@ fetchPromise.then(response => {//on exécute la promesse
   }))
  
 }
+
 getRequest()
- 
+cartNumber()

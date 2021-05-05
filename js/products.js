@@ -68,3 +68,4 @@ function popUpPanier (){
 }
 
 ajoutContent();
+cartNumber();

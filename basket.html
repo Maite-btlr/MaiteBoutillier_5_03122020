@@ -34,7 +34,12 @@
                 <a class="nav-link pl-4" href="index.html">Accueil</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link pl-4" href="basket.html">Panier <i class="fas fa-shopping-cart"></i></a>
+                <a class="nav-link pl-4" href="basket.html">Panier <i class="fas fa-shopping-cart"></i>
+                  <span id ="cart_number"></span>
+                </a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link pl-4" href="confirmation.html">Mes commandes</a>
               </li>
             </ul>
           </div>
@@ -52,13 +57,13 @@
           <th class="text-center">
             Article
           </th>
-          <th class="text-center">
+          <th class="text-center pl-2 pr-2">
             Quantité
           </th>
-          <th class="text-center">
-            Prix unitaire
+          <th class="text-center pl-3 pr-3">
+            Prix 
           </th>
-          <th class="text-center">
+          <th class="text-center pl-2 pr-2">
             Total
           </th>
           <th class="text-center">
@@ -76,13 +81,47 @@
   </div>
   <div class="text-center">
     <button id="vider_panier" class="btn btn-outline-secondary" type="button" onclick="viderPanier()">Vider le panier</button>
-    <div id="valid_commande" class="btn btn-warning"><a href="#formulaire" class="text-white">Poursuivre votre commande</a></div>
+    <div id="valid_commande" class="btn btn-warning"><a href="#formulaire" class="text-dark">Poursuivre votre commande</a></div>
     <div id="panier_vide" class="text-center"></div>
   </div>
 </section>
 
-<section id="formulaire">
 
+<section id="formulaire" class="container" >
+  <form>
+    <legend class="text-center">Veuillez préciser vos coordonnées dans le formulaire ci-dessous pour valider votre commande</legend>
+      </br>
+      
+      <div class="form-group">
+        <label for="name">Nom de famille</label>
+        <input type="text" class="form-control" id="lastName" placeholder="Floyd">
+      </div>
+
+      <div class="form-group">
+        <label for="firstname">Prénom</label>
+        <input type="text" class="form-control" id="firstName" placeholder="George">
+      </div>
+
+      <div class="form-group">
+        <label for="adress">Adresse</label>
+        <input type="text" class="form-control" id="adress" placeholder="15 chemin des Lilas">
+      </div>
+      
+      <div class="form-group">
+        <label for="city">Ville</label>
+        <input type="text" class="form-control" id="city" placeholder="Wanaka">
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" class="form-control" id="email" placeholder="votreadressemail@exemple.com">
+      </div>
+
+      <div id="erreur_mail" class="mb-4"></div>
+      <input type="reset" id="rafraichir" name="rafraichir" value="Effacer" class="btn btn-outline-secondary" />
+      <input type="submit" id="envoi" name="envoi" value="Commander" class="btn btn-warning" />
+    
+  </form>
 </section>
 
 <footer>
@@ -103,7 +142,11 @@
     </div>
   </div>
 </footer>
-  <script src="js/basket.js" async ></script>
+  
+  
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="js/cartnumber.js"></script>
+  <script src="js/basket.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
   crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 

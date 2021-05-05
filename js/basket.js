@@ -6,6 +6,7 @@ if (panier) {
  else {
     tableauVide();}
 
+
 function ligneTableau(){ // Ajout des elements ajouté au panier grace a leurs id 
     panier.forEach(function(result,index){infoHTML(result, index);});
      totalPanier();
@@ -29,7 +30,18 @@ function infoHTML (result, index){
     </tbody>`;
 }
 
-//pour faire disparaitre le bouton, le panier, le formulaire lorsque le panier est vide
+//calcul du total panier + affichage 
+function totalPanier(){
+    let total = 0;
+    panier.forEach(function(result,index){
+      total= total + panier[index].price * panier[index].quantite;
+      console.log(total);
+    });
+    document.getElementById("prix_total").textContent = total+"€";
+    localStorage.setItem("totalPanier", total);
+}
+
+//pour faire disparaitre le bouton, le panier et le formulaire lorsque le panier est vide
 function tableauVide() {
     document.getElementById("panier_vide").innerHTML += `
       <div class="container col-6 text-center border shadow bg-white rounded p-4 ">
@@ -42,6 +54,7 @@ function tableauVide() {
     document.getElementById("formulaire").style.display = "none";
     document.getElementById("valid_commande").style.display = "none";
 }
+
 
 //pour vider le panier et le localStorage
   function viderPanier() {
@@ -59,7 +72,7 @@ function annulerArticle(i) {
     window.location.reload();
 }
 
-//pour ajouter quantite dans le panier
+//pour ajouter quantite dans le panier +
 function quantitePlus(index) {
     let quantite = document.getElementById(`quantite_nombre`+index+``);
     let ajoutQuantite = ++panier[index].quantite; //on incrémente la quantité dans le localstorage
@@ -75,7 +88,7 @@ function quantitePlus(index) {
     }
 }
 
-//pour retirer quantite dans le panier
+//pour retirer quantite dans le panier -
 function quantiteMoins(index) {
     let quantite = document.getElementById(`quantite_nombre`+index+``);
     let retraitQuantite = --panier[index].quantite; //on décrémente la quantité dans le localstorage
@@ -93,3 +106,81 @@ function quantiteMoins(index) {
 
 // FORMULAIRE + REQUETE POST
 
+//Evenement pour vérifier le champ mail en enlevant le focus
+document.querySelector("#email").addEventListener("blur", function() {
+    const mail = document.querySelector("#email").value;
+    const regexEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/; // Utilisation de regex
+    if (!regexEmail.test(mail)) {
+      document.querySelector("#erreur_mail").textContent =
+        "Adresse email non valide";
+    }
+  });
+  
+//Evenement pour effacer le formulaire
+document.querySelector("#rafraichir").addEventListener("click", function() {
+document.querySelector("#erreur_mail").textContent = "";
+document.querySelector("#erreur_code").textContent = "";
+  });
+  
+//Evenement pour valider le formulaire et envoyer la requete POST
+  document.querySelector("#formulaire").addEventListener("submit", function(event){
+    event.preventDefault();
+    let input = document.getElementsByTagName("input");
+  
+    for (let i = 0; i < input.length; i++) { //boucle pour vérifier si chaque champ a été renseigné
+      if (input[i].value == "") { //si un des champs est vide, envoi d'un message erreur 
+        alert("OUPS ! Merci de renseigner correctement le formulaire pour valider votre commande.")
+        return false;
+      }
+    }
+    requestPost()
+    confirmCommand()
+    localStorage.clear()
+    totalPanier()
+  });
+  
+//pour créer la requete POST avec numero commande et infos contact
+  function requestPost() {
+    const idTableau = panier.map(function (product) {return product.id;});
+    let order = {
+      contact: {
+        firstName: document.querySelector("#firstName").value.trim(),
+        lastName: document.querySelector("#lastName").value.trim(),
+        address: document.querySelector("#adress").value.trim(),
+        city: document.querySelector("#city").value.trim(),
+        email: document.querySelector("#email").value.trim(),
+      },
+      products: idTableau,
+    };
+    console.log(order);
+  
+    const request = new Request( // On crée notre requête POST vers API
+      "https://jwdp5.herokuapp.com/api/cameras/order",
+      {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: new Headers({
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        }),
+      }
+    );
+  
+    fetch(request)
+      .then((response) => response.json())
+      .then((response) => { //on récupère la réponse de l'API pour obtenir numéro de commande
+        let numCommand = response.orderId;
+        //console.log(numCommand)
+        localStorage.setItem("idCommand", JSON.stringify(numCommand)); // on met à jour le localstorage avec numero de commande
+        localStorage.setItem("infosOrder",JSON.stringify(order)); // on met à jour le localstorage avec infos de commande
+      });
+  }
+  
+// CONFIRMATION DE COMMANDE
+  function confirmCommand() {
+    sweetAlert("Votre commande a bien été validée, vous allez être redirigé");
+    setTimeout(function() {window.location = 'confirmation.html'; }, 3000);
+  }
+  
+  
+  
