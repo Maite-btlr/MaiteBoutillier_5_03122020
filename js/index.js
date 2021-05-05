@@ -1,7 +1,7 @@
 function getRequest(){
 
-const fetchPromise = fetch('https://jwdp5.herokuapp.com/api/cameras');
-const inputJS = document.getElementById("produits");
+const fetchPromise = fetch('https://jwdp5.herokuapp.com/api/cameras'); // const pour chercher les données dans l'API
+const inputJS = document.getElementById("produits"); // const pour inserer par la suite les données dans la div "produits"
 
 fetchPromise.then(response => {//on exécute la promesse
     return response.json(); // on récupère le résultat sous format json
@@ -26,5 +26,5 @@ fetchPromise.then(response => {//on exécute la promesse
  
 }
 
-getRequest()
+getRequest() 
 cartNumber()

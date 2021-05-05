@@ -1,8 +1,8 @@
 // fonctions pour récuperer les données depuis l'API + pour afficher le produit
 function ajoutContent () {
     let id = new URL(window.location).searchParams.get('id')// On donne la valeur 'id' = 'id' de l'api 
-    fetch ("https://jwdp5.herokuapp.com/api/cameras/"+id)   
-    .then(response => response.json())
+    fetch ("https://jwdp5.herokuapp.com/api/cameras/"+id)  
+    .then(response => response.json()) 
     .then (data => { 
           article = data 
           ajoutHTML()
@@ -13,7 +13,7 @@ function ajoutContent () {
 
   //Ajout des objectifs pour chaque item renseigné dans l'API
   //A chaque exécution de la boucle, la variable est incrémentée de un (i ++), elle se termine quand il n'y a plus d'objets à ajouter  
-  // Ajout des options dans le HTML 
+  //Ajout des options dans le HTML 
   function ajoutLenses() {
     for (let i = 0; i < article.lenses.length; i++) {
     document.getElementById("lense_select").innerHTML += `<option value="` + article.lenses[i] + `">`+ article.lenses[i] + `</option>`
@@ -24,7 +24,6 @@ function ajoutContent () {
     document.getElementById('focus_produit').innerHTML += 
     `
       <div class="affichage_produit">
-       
         <img class=”image_produit” style="width: 100%" src="`+ article.imageUrl + `"  alt="appareil `+ article.name +`">
         <h3 class="mt-4 mb-4"><mark>`+ article.name + `</mark></h3>
         <p class="description_produit">`+ article.description + `</p>
@@ -49,7 +48,7 @@ function ajoutPanier() {
           quantite : 1,
           subTotal : article.price/100*1
         })
-        window.localStorage.setItem("panier", JSON.stringify(panier))   // Stocke les données, convertit la valeur JS en chaine Json 
+        window.localStorage.setItem("panier", JSON.stringify(panier))  // Stocke les données, convertit la valeur JS en chaine Json 
         //console.log(panier)
         console.log("Le produit a été ajouté au panier");
         popUpPanier()
@@ -63,7 +62,6 @@ function popUpPanier (){
   } else {
     userChoice = "Vous n'avez rien ajouté au panier";
   }
-
   document.getElementById("msg").innerHTML = userChoice; 
 }
 
