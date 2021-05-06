@@ -9,19 +9,20 @@ function addContent () {
           addLenses()
           console.log(article);        
       })
-  }  
+}  
 
-  //Ajout des objectifs pour chaque item renseigné dans l'API
-  //A chaque exécution de la boucle, la variable est incrémentée de un (i ++), elle se termine quand il n'y a plus d'objets à ajouter  
-  //Ajout des options dans le HTML 
-  function addLenses() {
-    for (let i = 0; i < article.lenses.length; i++) {
-    document.getElementById("lense_select").innerHTML += `<option value="` + article.lenses[i] + `">`+ article.lenses[i] + `</option>`
+//Ajout des objectifs pour chaque item renseigné dans l'API
+//A chaque exécution de la boucle, la variable est incrémentée de un (i ++), elle se termine quand il n'y a plus d'objets à ajouter  
+//Ajout des options dans le HTML 
+function addLenses() {
+  for (let i = 0; i < article.lenses.length; i++) {
+    document.getElementById("lense_select").innerHTML +=
+     `<option value="` + article.lenses[i] + `">`+ article.lenses[i] + `</option>`
     }
   }
-  // Présentation du produit en HTML dans la div adaptée
-  function addHTML() {
-    document.getElementById('focus_produit').innerHTML += 
+// Présentation du produit en HTML dans la div adaptée
+function addHTML() {
+  document.getElementById('focus_produit').innerHTML += 
     `
       <div class="affichage_produit">
         <img class=”image_produit” style="width: 100%" src="`+ article.imageUrl + `"  alt="appareil `+ article.name +`">
@@ -36,7 +37,8 @@ function addBasket() {
     let lentilles = document.querySelector('select').value; //Récupère la valeur de l'objectif choisi depuis la balise select 
     if (lentilles == "") { //si aucune lentille choisie, affichage alert
       alert("Oups! Vous devez choisir un objectif pour commander votre appareil");
-    } else {
+    } 
+    else {
         const panier = JSON.parse(localStorage.getItem("panier")) || [] // Retourne la valeur associée 
         panier.push({ //pour chaque article, on pousse les infos suivantes dans le panier
           image : article.imageUrl,

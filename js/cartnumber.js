@@ -10,5 +10,6 @@ function cartNumber() {
       localStorage.setItem("inCart", inCart); 
       document.getElementById("cart_number").textContent = inCart;
     }
-  }
+  };
+
 

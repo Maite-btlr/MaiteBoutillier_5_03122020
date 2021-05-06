@@ -44,9 +44,9 @@ function totalBasket(){
 //pour faire disparaitre le bouton, le panier et le formulaire lorsque le panier est vide
 function emptyTab() {
     document.getElementById("panier_vide").innerHTML += `
-      <div class="container col-6 text-center border shadow bg-white rounded p-4 ">
+      <div class="container col-6 text-center border shadow bg-white rounded p-5 mt-5 mb-5 ">
         <h3 class="mb-4">Votre panier est vide</h3>
-        <i class="fas fa-shopping-cart fa-1x"></i>
+        <i class="fas fa-shopping-cart fa-3x p-3"></i>
       </div>`
     ;
     document.getElementById("tableau_panier").style.display = "none";
@@ -138,9 +138,9 @@ document.querySelector("#erreur_code").textContent = "";
     totalBasket()
   });
   
-//pour créer la requete POST avec numero commande et infos contact
-  function requestPost() {
-    const idTableau = panier.map(function (product) {return product.id;});
+//pour créer la requete POST avec numero commande et infos du formulaire
+function requestPost() {
+  const idTableau = panier.map(function (product) {return product.id;});
     let order = {
       contact: {
         firstName: document.querySelector("#firstName").value.trim(),
@@ -150,30 +150,30 @@ document.querySelector("#erreur_code").textContent = "";
         email: document.querySelector("#email").value.trim(),
       },
       products: idTableau,
-    };
-    console.log(order);
+ };
+ console.log(order);
   
-    const request = new Request( // On crée notre requête POST vers API
-      "https://jwdp5.herokuapp.com/api/cameras/order",
-      {
-        method: "POST",
-        body: JSON.stringify(order),
-        headers: new Headers({
-          Accept: "application/json",
-          "Content-Type": "application/json",
+ const request = new Request( // On crée notre requête POST vers API
+  "https://jwdp5.herokuapp.com/api/cameras/order",
+    {
+     method: "POST",
+     body: JSON.stringify(order),
+     headers: new Headers({
+     Accept: "application/json",
+    "Content-Type": "application/json",
         }),
-      }
-    );
+    }
+ );
   
-    fetch(request)
-      .then((response) => response.json())
-      .then((response) => { //on récupère la réponse de l'API pour obtenir numéro de commande
-        let numCommand = response.orderId;
-        //console.log(numCommand)
-        localStorage.setItem("idCommand", JSON.stringify(numCommand)); // on met à jour le localstorage avec numero de commande
-        localStorage.setItem("infosOrder",JSON.stringify(order)); // on met à jour le localstorage avec infos de commande
-      });
-  }
+  fetch(request)
+  .then((response) => response.json())
+  .then((response) => { //on récupère la réponse de l'API pour obtenir numéro de commande
+    let numCommand = response.orderId;
+    //console.log(numCommand)
+    localStorage.setItem("idCommand", JSON.stringify(numCommand)); // on met à jour le localstorage avec numero de commande
+    localStorage.setItem("infosOrder",JSON.stringify(order)); // on met à jour le localstorage avec infos de commande
+    });
+}
   
 // CONFIRMATION DE COMMANDE
   function confirmCommand() {
