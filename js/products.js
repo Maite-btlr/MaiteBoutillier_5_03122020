@@ -1,12 +1,12 @@
 // fonctions pour récuperer les données depuis l'API + pour afficher le produit
-function ajoutContent () {
+function addContent () {
     let id = new URL(window.location).searchParams.get('id')// On donne la valeur 'id' = 'id' de l'api 
     fetch ("https://jwdp5.herokuapp.com/api/cameras/"+id)  
     .then(response => response.json()) 
     .then (data => { 
           article = data 
-          ajoutHTML()
-          ajoutLenses()
+          addHTML()
+          addLenses()
           console.log(article);        
       })
   }  
@@ -14,13 +14,13 @@ function ajoutContent () {
   //Ajout des objectifs pour chaque item renseigné dans l'API
   //A chaque exécution de la boucle, la variable est incrémentée de un (i ++), elle se termine quand il n'y a plus d'objets à ajouter  
   //Ajout des options dans le HTML 
-  function ajoutLenses() {
+  function addLenses() {
     for (let i = 0; i < article.lenses.length; i++) {
     document.getElementById("lense_select").innerHTML += `<option value="` + article.lenses[i] + `">`+ article.lenses[i] + `</option>`
     }
   }
   // Présentation du produit en HTML dans la div adaptée
-  function ajoutHTML() {
+  function addHTML() {
     document.getElementById('focus_produit').innerHTML += 
     `
       <div class="affichage_produit">
@@ -32,7 +32,7 @@ function ajoutContent () {
     `
     }
 //Ajout du produit au panier
-function ajoutPanier() {
+function addBasket() {
     let lentilles = document.querySelector('select').value; //Récupère la valeur de l'objectif choisi depuis la balise select 
     if (lentilles == "") { //si aucune lentille choisie, affichage alert
       alert("Oups! Vous devez choisir un objectif pour commander votre appareil");
@@ -51,12 +51,12 @@ function ajoutPanier() {
         window.localStorage.setItem("panier", JSON.stringify(panier))  // Stocke les données, convertit la valeur JS en chaine Json 
         //console.log(panier)
         console.log("Le produit a été ajouté au panier");
-        popUpPanier()
+        popUpBasket()
       }
 }
 
 //Affichage d'un popup pour confirmer l'ajout au panier  
-function popUpPanier (){ 
+function popUpBasket (){ 
   if (confirm("Vous avez ajouté un article au panier") == true) {
     userChoice = "Prêts pour de nouveaux clichés ?";
   } else {
@@ -65,5 +65,5 @@ function popUpPanier (){
   document.getElementById("msg").innerHTML = userChoice; 
 }
 
-ajoutContent();
+addContent();
 cartNumber();

@@ -2,14 +2,14 @@ const panier = JSON.parse(localStorage.getItem("panier")); // On récupere les d
 
 //Condition pour afficher le panier
 if (panier) {
-    ligneTableau();}
+    fullTab();}
  else {
-    tableauVide();}
+    emptyTab();}
 
 
-function ligneTableau(){ // Ajout des elements ajouté au panier grace a leurs id 
+function fullTab(){ // Ajout des elements ajouté au panier grace a leurs id 
     panier.forEach(function(result,index){infoHTML(result, index);});
-     totalPanier();
+     totalBasket();
      cartNumber();
 }
 
@@ -19,19 +19,19 @@ function infoHTML (result, index){
       <tr id="ligne_tableau">
         <td class="text-center"><img src="`+result.image+`" class="w-25" alt="appareil `+result.name+`"> <br/> `+result.name+`<br/> Objectif : `+result.lenses+`</td>
         <td class="text-center">
-          <button disabled="disabled" onclick="quantiteMoins(`+index+`)" id="bouton_moins`+index+`" class="btn btn-dark btn-sm">-</button>
+          <button disabled="disabled" onclick="quantityLess(`+index+`)" id="bouton_moins`+index+`" class="btn btn-dark btn-sm">-</button>
           <span id="quantite_nombre`+index+`" class="quantite_produit">`+result.quantite+`</span>
-          <button onclick="quantitePlus(`+index+`)" id="bouton_plus`+index+`" class="btn btn-dark btn-sm">+</button>
+          <button onclick="quantityPlus(`+index+`)" id="bouton_plus`+index+`" class="btn btn-dark btn-sm">+</button>
         </td>
         <td id="prix_unite`+index+`" class="text-center">`+result.price + " €"+`</td>
         <td id="sous_total`+index+`"class="subtotal text-center">`+result.subTotal + " €"+`</td>
-        <td class="text-center"><i id="supp_produit" onclick="annulerArticle()" type="button" class="fas fa-trash-alt" title="Supprimer le produit du panier"></i></td>
+        <td class="text-center"><i id="supp_produit" onclick="annulArticle()" type="button" class="fas fa-trash-alt" title="Supprimer le produit du panier"></i></td>
       </tr>
     </tbody>`;
 }
 
 //calcul du total panier + affichage 
-function totalPanier(){
+function totalBasket(){
     let total = 0;
     panier.forEach(function(result,index){
       total= total + panier[index].price * panier[index].quantite;
@@ -42,7 +42,7 @@ function totalPanier(){
 }
 
 //pour faire disparaitre le bouton, le panier et le formulaire lorsque le panier est vide
-function tableauVide() {
+function emptyTab() {
     document.getElementById("panier_vide").innerHTML += `
       <div class="container col-6 text-center border shadow bg-white rounded p-4 ">
         <h3 class="mb-4">Votre panier est vide</h3>
@@ -55,15 +55,14 @@ function tableauVide() {
     document.getElementById("valid_commande").style.display = "none";
 }
 
-
 //pour vider le panier et le localStorage
-  function viderPanier() {
+  function emptyTheBasket() {
     localStorage.clear();
     location.reload();
 }
 
 // pour retirer article du panier
-function annulerArticle(i) {
+function annulArticle(i) {
     panier.splice(i, 1);// on supprime un item du panier
     localStorage.clear(); // on le retire du localstorage
     // Mise à jour du nouveau panier après suppression de l'article
@@ -73,33 +72,33 @@ function annulerArticle(i) {
 }
 
 //pour ajouter quantite dans le panier +
-function quantitePlus(index) {
+function quantityPlus(index) {
     let quantite = document.getElementById(`quantite_nombre`+index+``);
-    let ajoutQuantite = ++panier[index].quantite; //on incrémente la quantité dans le localstorage
-    quantite.textContent = ajoutQuantite; //on met à jour la quantité dans le tableau
+    let addQuantity = ++panier[index].quantite; //on incrémente la quantité dans le localstorage
+    quantite.textContent = addQuantity; //on met à jour la quantité dans le tableau
     let sousTotal = document.getElementById(`sous_total`+index+``);
     let ajoutTotal = panier[index].price * panier[index].quantite;
     sousTotal.textContent = ``+ajoutTotal+` €`; //on met à jour le sous-total dans le tableau
 //console.log(ajoutQuantite)
     localStorage.setItem("panier", JSON.stringify(panier)); // on met à jour le localstorage
-    totalPanier(); //on met à jour le total panier
-    if (ajoutQuantite > 1) {
+    totalBasket(); //on met à jour le total panier
+    if (addQuantity > 1) {
       document.getElementById(`bouton_moins`+index+``).removeAttribute("disabled");
     }
 }
 
 //pour retirer quantite dans le panier -
-function quantiteMoins(index) {
+function quantityLess(index) {
     let quantite = document.getElementById(`quantite_nombre`+index+``);
-    let retraitQuantite = --panier[index].quantite; //on décrémente la quantité dans le localstorage
-    quantite.textContent = retraitQuantite; //on met à jour la quantité dans le tableau
+    let subQuantity = --panier[index].quantite; //on décrémente la quantité dans le localstorage
+    quantite.textContent = subQuantity; //on met à jour la quantité dans le tableau
     let sousTotal = document.getElementById(`sous_total`+index+``);
     let ajoutTotal = panier[index].price * panier[index].quantite;
     sousTotal.textContent = ``+ajoutTotal+` €`; //on met à jour le sous-total dans le tableau
     //console.log(retraitQuantite)
     localStorage.setItem("panier", JSON.stringify(panier)); // on met à jour le localstorage
-    totalPanier(); //on met à jour le total panier
-    if (retraitQuantite <= 1) {
+    totalBasket(); //on met à jour le total panier
+    if (subQuantity <= 1) {
       document.getElementById(`bouton_moins`+index+``).setAttribute("disabled", "disabled");
     }
 }
@@ -136,7 +135,7 @@ document.querySelector("#erreur_code").textContent = "";
     requestPost()
     confirmCommand()
     localStorage.clear()
-    totalPanier()
+    totalBasket()
   });
   
 //pour créer la requete POST avec numero commande et infos contact
