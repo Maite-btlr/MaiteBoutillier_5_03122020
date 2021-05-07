@@ -105,7 +105,7 @@ function quantityLess(index) {
 
 // FORMULAIRE + REQUETE POST
 
-//Evenement pour vérifier le champ mail en enlevant le focus
+//Evenement pour vérifier le champ mail 
 document.querySelector("#email").addEventListener("blur", function() {
     const mail = document.querySelector("#email").value;
     const regexEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/; // Utilisation de regex
@@ -114,7 +114,7 @@ document.querySelector("#email").addEventListener("blur", function() {
         "Adresse email non valide";
     }
   });
-  
+
 //Evenement pour effacer le formulaire
 document.querySelector("#rafraichir").addEventListener("click", function() {
 document.querySelector("#erreur_mail").textContent = "";

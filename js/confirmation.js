@@ -14,7 +14,7 @@ function showCommand() {
           <div class="font-weight-bold mb-4">`+localStorage.totalPanier+` €</div>
           <h3 class="mb-4">Un mail vous sera adressé dès l'expédition de votre appareil </h3>
           <p>Merci et à bientôt !</p>
-          <a href="index.html">ACCEUIL</a>
+          <a href="index.html">ACCUEIL</a>
         </div>
   `;
     } else { // sinon on indique qu'il n'y a pas de commande en cours  
