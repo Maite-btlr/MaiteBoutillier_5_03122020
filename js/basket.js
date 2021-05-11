@@ -44,7 +44,7 @@ function totalBasket(){
 //pour faire disparaitre le bouton, le panier et le formulaire lorsque le panier est vide
 function emptyTab() {
     document.getElementById("panier_vide").innerHTML += `
-      <div class="container col-6 text-center border shadow bg-white rounded p-5 mt-5 mb-5 ">
+      <div class="container col-6 text-center border shadow bg-white rounded py-5 mt-5 mb-5 ">
         <h3 class="mb-4">Votre panier est vide</h3>
         <i class="fas fa-shopping-cart fa-3x p-3"></i>
       </div>`
