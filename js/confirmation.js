@@ -20,9 +20,9 @@ function showCommand() {
     } else { // sinon on indique qu'il n'y a pas de commande en cours  
       document.getElementById("confirmation").style.display = "none";
       document.getElementById("no_command").innerHTML += `
-      <div class="container col-10 text-center border shadow bg-white rounded p-4">
+      <div class="container col-6 text-center border shadow bg-white rounded py-5 mt-5 mb-5">
         <h3 class="mb-4">Vous n'avez pas de commande en cours</h3>
-        <button type="button" class="btn btn-warning p-2"><a href="index.html" id="bouton_command" class="text-dark">Découvrez notre gamme d'appareils-photo</a></button>
+        <button type="button" class="btn btn-warning p-2"><a href="index.html" id="bouton_command" class="text-dark">Découvrez notre gamme </br>d'appareils-photo</a></button>
       </div>
       `;
     }

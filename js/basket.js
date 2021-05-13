@@ -108,7 +108,7 @@ function quantityLess(index) {
 //Evenement pour vérifier le champ mail 
 document.querySelector("#email").addEventListener("blur", function() {
     const mail = document.querySelector("#email").value;
-    const regexEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/; // Utilisation de regex
+    const regexEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/; // Utilisation de regex (POUR VALIDER LE CHAMP DE SAISIE)
     if (!regexEmail.test(mail)) {
       document.querySelector("#erreur_mail").textContent =
         "Adresse email non valide";
