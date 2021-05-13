@@ -1,4 +1,4 @@
-// fonctions pour récuperer les données depuis l'API + pour afficher le produit
+// fonctions pour récuperer les données depuis l'API et pour afficher le produit
 function addContent () {
     let id = new URL(window.location).searchParams.get('id')// On donne la valeur 'id' = 'id' de l'api 
     fetch ("https://jwdp5.herokuapp.com/api/cameras/"+id)  
@@ -39,7 +39,7 @@ function addBasket() {
       alert("Oups! Vous devez choisir un objectif pour commander votre appareil");
     } 
     else {
-        const panier = JSON.parse(localStorage.getItem("panier")) || [] // Retourne la valeur associée 
+        const panier = JSON.parse(localStorage.getItem("panier")) || [] // On extrait le json du panier 
         panier.push({ //pour chaque article, on pousse les infos suivantes dans le panier
           image : article.imageUrl,
           name : article.name,
@@ -51,7 +51,7 @@ function addBasket() {
           subTotal : article.price/100*1
         })
         window.localStorage.setItem("panier", JSON.stringify(panier))  // Stocke les données, convertit la valeur JS en chaine Json 
-        //console.log(panier)
+        
         console.log("Le produit a été ajouté au panier");
         popUpBasket()
       }
@@ -62,7 +62,7 @@ function popUpBasket (){
   if (confirm("Vous avez ajouté un article au panier") == true) {
     userChoice = "Prêts pour de nouveaux clichés ?";
   } else {
-    userChoice = "Vous n'avez rien ajouté au panier";
+    userChoice = "";
   }
   document.getElementById("msg").innerHTML = userChoice; 
 }

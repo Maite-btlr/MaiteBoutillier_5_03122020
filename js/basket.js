@@ -1,18 +1,18 @@
-const panier = JSON.parse(localStorage.getItem("panier")); // On récupere les données stockées
+const panier = JSON.parse(localStorage.getItem("panier")); // On récupere les données stockées dans le local storage 
 
-//Condition pour afficher le panier
-if (panier) {
+// Condition pour afficher le panier
+if (panier) {//S'il y a un panier, execute la fonction pour l'afficher
     fullTab();}
- else {
+ else {//Sinon, la fonction pour le masquer 
     emptyTab();}
 
 
-function fullTab(){ // Ajout des elements ajouté au panier grace a leurs id 
-    panier.forEach(function(result,index){infoHTML(result, index);});
-     totalBasket();
-     cartNumber();
+function fullTab(){ // Boucle pour importer les données de chaque article panier
+  panier.forEach(function(result,index){infoHTML(result, index);});
+  totalBasket();
+  cartNumber();
 }
-
+ 
 function infoHTML (result, index){
     document.getElementById("ajout_panier").innerHTML += `
     <tbody id="products-tablebody">
@@ -41,11 +41,12 @@ function totalBasket(){
     localStorage.setItem("totalPanier", total);
 }
 
-//pour faire disparaitre le bouton, le panier et le formulaire lorsque le panier est vide
+//pour masquer le bouton, le panier et le formulaire lorsque le panier de l'utilisateur est vide
 function emptyTab() {
     document.getElementById("panier_vide").innerHTML += `
       <div class="container col-6 text-center border shadow bg-white rounded py-5 mt-5 mb-5 ">
         <h3 class="mb-4">Votre panier est vide</h3>
+        <a href="index.html"><p class="mb-4 text-secondary">Découvrez nos cameras vintage </p></a>
         <i class="fas fa-shopping-cart fa-3x p-3"></i>
       </div>`
     ;
@@ -55,15 +56,15 @@ function emptyTab() {
     document.getElementById("valid_commande").style.display = "none";
 }
 
-//pour vider le panier et le localStorage
+//pour vider le panier et le localStorage (on click html)
   function emptyTheBasket() {
     localStorage.clear();
     location.reload();
 }
 
-// pour retirer article du panier
+// pour retirer article du panier 
 function annulArticle(i) {
-    panier.splice(i, 1);// on supprime un item du panier
+    panier.splice(i, 1);// on supprime un item du panier avec splice
     localStorage.clear(); // on le retire du localstorage
     // Mise à jour du nouveau panier après suppression de l'article
     localStorage.setItem("panier", JSON.stringify(panier));
@@ -79,7 +80,6 @@ function quantityPlus(index) {
     let sousTotal = document.getElementById(`sous_total`+index+``);
     let ajoutTotal = panier[index].price * panier[index].quantite;
     sousTotal.textContent = ``+ajoutTotal+` €`; //on met à jour le sous-total dans le tableau
-//console.log(ajoutQuantite)
     localStorage.setItem("panier", JSON.stringify(panier)); // on met à jour le localstorage
     totalBasket(); //on met à jour le total panier
     if (addQuantity > 1) {
@@ -95,7 +95,6 @@ function quantityLess(index) {
     let sousTotal = document.getElementById(`sous_total`+index+``);
     let ajoutTotal = panier[index].price * panier[index].quantite;
     sousTotal.textContent = ``+ajoutTotal+` €`; //on met à jour le sous-total dans le tableau
-    //console.log(retraitQuantite)
     localStorage.setItem("panier", JSON.stringify(panier)); // on met à jour le localstorage
     totalBasket(); //on met à jour le total panier
     if (subQuantity <= 1) {
@@ -118,7 +117,7 @@ document.querySelector("#email").addEventListener("blur", function() {
 //Evenement pour effacer le formulaire
 document.querySelector("#rafraichir").addEventListener("click", function() {
 document.querySelector("#erreur_mail").textContent = "";
-document.querySelector("#erreur_code").textContent = "";
+
   });
   
 //Evenement pour valider le formulaire et envoyer la requete POST
@@ -138,7 +137,7 @@ document.querySelector("#erreur_code").textContent = "";
     totalBasket()
   });
   
-//pour créer la requete POST avec numero commande et infos du formulaire
+//pour créer la requete POST et retourner le numero commande 
 function requestPost() {
   const idTableau = panier.map(function (product) {return product.id;});
     let order = {
@@ -150,10 +149,10 @@ function requestPost() {
         email: document.querySelector("#email").value.trim(),
       },
       products: idTableau,
- };
+  };
  console.log(order);
   
- const request = new Request( // On crée notre requête POST vers API
+ const request = new Request( // On crée notre requête POST vers API en lui passant en paramètres les données a envoyer 
   "https://jwdp5.herokuapp.com/api/cameras/order",
     {
      method: "POST",
@@ -164,7 +163,7 @@ function requestPost() {
         }),
     }
  );
-  
+
   fetch(request)
   .then((response) => response.json())
   .then((response) => { //on récupère la réponse de l'API pour obtenir numéro de commande

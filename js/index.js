@@ -3,13 +3,13 @@ function getRequest(){
 const fetchPromise = fetch('https://jwdp5.herokuapp.com/api/cameras'); // const pour chercher les données dans l'API
 const inputJS = document.getElementById("produits"); // const pour inserer par la suite les données dans la div "produits"
 
-fetchPromise.then(response => {//on exécute la promesse
-    return response.json(); // on récupère le résultat sous format json
+fetchPromise.then(response => {// on transforme le resultat en une nouvelle promesse résolue
+    return response.json(); // on récupère la reponse sous format json (format textuel)
   })
-  .then((data => {
+  .then((data => { // qu'on utilise pour une nouvelle fonction 
     data.forEach((item)  => { //pour chaque item récupéré depuis l'API, on créer une constante name, price_id etc..
       const { name, price, _id, description, imageUrl } = item;
-              //puis on insert ces informations sous forme HTML 
+              //puis on insert ces informations dans l'index HTML 
               inputJS.innerHTML +=`
               <div class="container col-md-6 col-lg-4">
                  <div class="affichage_produit mt-4 card bg-white">
