@@ -1,9 +1,9 @@
 const panier = JSON.parse(localStorage.getItem("panier")); // On récupere les données stockées dans le local storage 
 
 // Condition pour afficher le panier
-if (panier) {//S'il y a un panier, execute la fonction pour l'afficher
+if (panier) { 
     fullTab();}
- else {//Sinon, la fonction pour le masquer 
+ else { 
     emptyTab();}
 
 
